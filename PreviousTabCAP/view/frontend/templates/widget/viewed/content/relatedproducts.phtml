@@ -1,0 +1,26 @@
+<?php /** @var Riksten\PreviousTabCAP\Block\RelatedProducts $block */ ?>
+<?php $productIds = $block->getRelatedProductCollection() ?>
+<div class="related-products-title">
+    <h2><?= __('Related Products') ?></h2>
+</div>
+<div class="products wrapper grid products-grid">
+    <ol class="products list items product-items">
+    <?php foreach ($productIds as $productId): ?>
+        <li class="product-item">
+            <div class="product-item-info" data-container="product-grid">
+                <a href="<?= $productId->getProductUrl() ?>" class="product photo product-item-photo">
+                    <img src="<?= $productId->getImage() ?>"/>
+                </a>
+                <div class="product details product-item-details">
+                    <strong class="product name product-item-name">
+                        <a class="product-item-link" href="<?= $productId->getProductUrl() ?>">
+                            <?= $productId->getName() ?>
+                        </a>
+                    </strong>
+                    <?= $productId->getPrice()?>
+                </div>
+            </div>
+        </li>
+    <?php endforeach ?>
+    </ol>
+</div>

@@ -1,0 +1,25 @@
+<?php if ($items = $block->getRecentlyViewedProducts()): ?>
+    <div class="table-wrapper">
+        <table class="table-recently-viewed">
+            <thead>
+                <tr>
+                    <th scope="col" class="title"><?php echo __('Title') ?></th>
+                    <th scope="col" class="price"><?php echo __('Price') ?></th>
+                    <th scope="col" class="sku"><?php echo __('SKU') ?></th>
+                    <th scope="col" class="button ">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($items as $item): ?>
+             <tr>
+                <td class="product-name"><?= $item->getName()  ?></td>
+                <td class="product-price"><?= $block->getProductPrice($item) ?></td>
+                <td class="product-sku"><?= $item->getSKU() ?></td>
+                <td class="product-redirect-button"><a href="<?= $item->getProductUrl($item) ?>"><button>View Product</button></a></td>
+            </tr>
+            </tbody>
+            <?php endforeach ?>
+        </table>
+    </div>
+<?php endif;?>
+
