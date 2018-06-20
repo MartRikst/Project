@@ -6,6 +6,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Reports\Block\Product\Widget\Viewed as recentlyViewed;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Block\Product\ImageBuilder;
 
 /**
  * Class RelatedProducts
@@ -20,19 +21,26 @@ class RelatedProducts extends Template
     /** @var ProductRepositoryInterface $productRepository */
     protected $productRepository;
 
+    /** @var ImageBuilder $imageBuilder */
+    protected $imageBuilder;
+
+
     /**
      * RelatedProducts constructor.
      * @param Context $context
      * @param recentlyViewed $recentlyViewed
      * @param ProductRepositoryInterface $productRepository
+     * @param ImageBuilder $imageBuilder
      * @param array $data
      */
     public function __construct(
         Context $context,
         recentlyViewed $recentlyViewed,
         ProductRepositoryInterface $productRepository,
+        ImageBuilder $imageBuilder,
         array $data = []
     ) {
+        $this->imageBuilder = $imageBuilder;
         $this->recentlyViewed = $recentlyViewed;
         $this->productRepository = $productRepository;
         parent::__construct($context, $data);
@@ -64,6 +72,20 @@ class RelatedProducts extends Template
         }
 
         return $relatedProducts;
+    }
+
+    /**
+     * @param $product
+     * @param $imageId
+     * @param array $attributes
+     * @return \Magento\Catalog\Block\Product\Image
+     */
+    public function getImage($product, $imageId, $attributes = [])
+    {
+        return $this->imageBuilder->setProduct($product)
+            ->setImageId($imageId)
+            ->setAttributes($attributes)
+            ->create();
     }
 
 }
